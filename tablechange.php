@@ -1,12 +1,8 @@
 <?php
-$host = 'localhost';
-$db = 'vaitovich';
-$user = 'vaitovich';
-$password = "neto1203";
-//$host = 'localhost';    //127.0.0.1
-//$db = 'php-15-homework';
-//$user = 'root';
-//$password = "alex1983";
+$host = 'localhost';    //127.0.0.1
+$db = 'php-15-homework';
+$user = 'root';
+$password = "alex1983";
 
 $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $password);
 
@@ -14,9 +10,6 @@ if (!$pdo)
 {
     die('Could not connect');
 }
-//echo '<pre>';
-//print_r($_GET);
-//echo '</pre>';
 
 if (!empty($_GET['id'])) {
 

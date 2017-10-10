@@ -86,8 +86,8 @@ while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
     <td><?= $row['Field']; ?></td>
     <td><?= $row['Type']; ?></td>
     <td>
-        <a href="tablechange.php?id=<?= $row['Type']; ?>&table_name=<?= $table ?>&name=<?= $row['Field']; ?>&action=edit_type">Изменить TYPE</a>  
-        <a href="tablechange.php?id=<?= $row['Field']; ?>&table_name=<?= $table ?>&type=<?= $row['Type']; ?>&action=edit_name">Изменить NAME</a>  
+        <a href="tablechange.php?id=<?= $row['Type']; ?>&table_name=<?= $table ?>&name=<?= $row['Field']; ?>&action=edit_type">Изменить тип</a>  
+        <a href="tablechange.php?id=<?= $row['Field']; ?>&table_name=<?= $table ?>&type=<?= $row['Type']; ?>&action=edit_name">Изменить название</a>  
         <a href="tableinfo.php?id=<?= $row['Field']; ?>&table_name=<?= $table ?>&action=delete">Удалить</a>
     </td> 
 </tr>

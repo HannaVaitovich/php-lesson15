@@ -14,7 +14,6 @@ $db = 'php-15-homework';
 $user = 'root';
 $password = "alex1983";
 
-
 $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $password);
 if (!$pdo)
 {
@@ -30,7 +29,7 @@ while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
 	foreach($row as $key => $value) {
 		$result[] = $value;
 	}
-	echo '<a href="tableinfo.php?name=' . $value . '">' . $value . '</a><br>';
+	echo '<a href="tableinfo.php?table_name=' . $value . '">' . $value . '</a><br>';
 }
 
 ?>

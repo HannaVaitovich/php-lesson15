@@ -32,8 +32,34 @@ if (!$pdo)
     die('Could not connect');
 }
 
-if (isset($_GET)) {
-$table = htmlspecialchars($_GET['name']);
+
+if (isset($_GET) || isset($_POST['table_name'])) {
+
+if (isset($_GET['table_name'])) {
+    $table = htmlspecialchars($_GET['table_name']);
+} elseif (isset($_POST['table_name'])) {
+    $table = htmlspecialchars($_POST['table_name']);
+}
+
+if (isset($_POST['change_name'])) {
+        $name = htmlspecialchars($_POST['name']);
+        $new_name = htmlspecialchars($_POST['new_name']);
+        $type = htmlspecialchars($_POST['type']);
+        $change_name = "ALTER TABLE $table CHANGE $name $new_name $type";
+        $pdo->exec($change_name);
+}
+
+if (isset($_POST['change_type'])) {
+    $name = htmlspecialchars($_POST['name']);
+    $type = htmlspecialchars($_POST['new_type']);
+    $change_type = "ALTER TABLE $table CHANGE $name $name $type";
+    $pdo->exec($change_type);
+}
+
+if (isset($_GET['action']) && $_GET['action'] == 'delete') {
+        $del = "ALTER TABLE $table DROP COLUMN " . $_GET['id'];
+        $pdo->exec($del);
+    }
 
 $sql = "DESCRIBE $table";
 $statement = $pdo->prepare($sql);
@@ -43,11 +69,8 @@ $results = [];
 while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
     $results[] = $row;
 }
-}
 
-//echo '<pre>';
-//print_r($_GET);
-//echo '</pre>';
+}
 
 ?>
 
@@ -63,9 +86,9 @@ while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
     <td><?= $row['Field']; ?></td>
     <td><?= $row['Type']; ?></td>
     <td>
-        <a href="tableinfo.php?id=<?= $row['Type']; ?>&action=edit_type">Изменить TYPE</a>  
-        <a href="tableinfo.php?id=<?= $row['Field']; ?>&action=done_name">Изменить NAME</a>  
-        <a href="tableinfo.php?id=<?= $row['Field']; ?>&action=delete">Удалить</a>
+        <a href="tablechange.php?id=<?= $row['Type']; ?>&table_name=<?= $table ?>&name=<?= $row['Field']; ?>&action=edit_type">Изменить TYPE</a>  
+        <a href="tablechange.php?id=<?= $row['Field']; ?>&table_name=<?= $table ?>&type=<?= $row['Type']; ?>&action=edit_name">Изменить NAME</a>  
+        <a href="tableinfo.php?id=<?= $row['Field']; ?>&table_name=<?= $table ?>&action=delete">Удалить</a>
     </td> 
 </tr>
 <?php } ?>
